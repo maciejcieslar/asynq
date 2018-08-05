@@ -1,6 +1,8 @@
 import { isGeneratorLike } from './utils';
 
-const asynq = (generatorFactory: () => IterableIterator<any>) => {
+type GeneratorFactory = () => IterableIterator<any>;
+
+function asynq(generatorFactory: GeneratorFactory): Promise<any> {
   const generator = generatorFactory();
 
   if (!isGeneratorLike(generator)) {
@@ -18,6 +20,6 @@ const asynq = (generatorFactory: () => IterableIterator<any>) => {
       .then((ensuredValue) => resolve(generator.next(ensuredValue)))
       .catch((error) => resolve(generator.throw(error)));
   })(generator.next());
-};
+}
 
 export { asynq };
