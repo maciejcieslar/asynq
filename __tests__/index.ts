@@ -3,10 +3,7 @@ import { asynq } from '../src';
 describe('asynq core', () => {
   test('Waits for values (like await does)', () => {
     return asynq(function*() {
-      console.log('5');
       const a = yield Promise.resolve('a');
-      console.log(a);
-
       expect(a).toBe('a');
     });
   });
